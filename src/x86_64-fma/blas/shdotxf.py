@@ -1,8 +1,8 @@
 from __future__ import absolute_import
 from __future__ import division
 
-from fp16.avx import fp16_alt_xmm_to_fp32_xmm
-from fp16.avx2 import fp16_alt_xmm_to_fp32_ymm
+#from fp16.avx import fp16_alt_xmm_to_fp32_xmm
+#from fp16.avx2 import fp16_alt_xmm_to_fp32_ymm
 
 simd_width = YMMRegister.size // float_.size
 
@@ -54,8 +54,8 @@ for fusion_factor in range(1, 8 + 1):
 				VMOVUPS(xmm_half, [reg_y])
 				ADD(reg_y, XMMRegister.size)
 
-				ymm_y = fp16_alt_xmm_to_fp32_ymm(xmm_half)
-				VFMADD231PS(ymm_acc, ymm_x, ymm_y)
+				#ymm_y = fp16_alt_xmm_to_fp32_ymm(xmm_half)
+				#VFMADD231PS(ymm_acc, ymm_x, ymm_y)
 
 			SUB(reg_n, YMMRegister.size // float_.size)
 			JAE(main_loop.begin)
@@ -76,8 +76,8 @@ for fusion_factor in range(1, 8 + 1):
 				VMOVD(xmm_half, reg_half)
 				ADD(reg_y, uint16_t.size)
 
-				ymm_y = fp16_alt_xmm_to_fp32_ymm(xmm_half)
-				VFMADD231PS(ymm_acc, xmm_x.as_ymm, ymm_y)
+				#ymm_y = fp16_alt_xmm_to_fp32_ymm(xmm_half)
+				#VFMADD231PS(ymm_acc, xmm_x.as_ymm, ymm_y)
 
 			SUB(reg_n, 1)
 			JAE(edge_loop.begin)
